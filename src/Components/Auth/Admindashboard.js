@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 import { jwtDecode } from "jwt-decode";
 
 const BASE_URL = "https://blissfullbites-mern-backend.onrender.com/api/products";
-const LOGOUT_URL = "http://localhost:5000/api/auth/logout";
+const LOGOUT_URL = "https://blissfullbites-mern-backend.onrender.com/api/auth/logout";
 
 const AdminDashboard = () => {
   const [products, setProducts] = useState([]);
