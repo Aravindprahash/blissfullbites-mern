@@ -36,3 +36,12 @@
     transform: rotate(360deg);
   }
 }
+
+ .bimage {
+            background-image: url(img-11.jpg);
+            height: 70vh;
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            font-size: 25px;
+        }
