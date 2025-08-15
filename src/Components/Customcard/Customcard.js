@@ -13,7 +13,7 @@ const Customcard = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    fetch('https://dessert-project-nine.vercel.app/api/products')
+    fetch('https://blissfullbites-mern-backend.onrender.com/api/products')
       .then((res) => {
         if (!res.ok) throw new Error(`HTTP error! status: ${res.status}`);
         return res.json();
@@ -22,7 +22,7 @@ const Customcard = () => {
         setProducts(data);
         setLoading(false);
       })
-      .catch((err) => {
+      .catch(() => {
         setError('Failed to fetch products.');
         setLoading(false);
       });
@@ -37,26 +37,85 @@ const Customcard = () => {
     product.name.toLowerCase().includes(searchTerm.toLowerCase())
   );
 
-  if (loading) return <p style={{textAlign:'center'}}>Loading products...</p>;
-  if (error) return <p style={{ color: 'red' }}>{error}</p>;
+  if (loading) return <p style={{ textAlign: 'center' }}>Loading products...</p>;
+  if (error) return <p style={{ color: 'red', textAlign: 'center' }}>{error}</p>;
 
   return (
-    <div style={{ padding: '20px', display: 'flex', flexWrap: 'wrap', gap: '20px', justifyContent: 'center' }}>
-      {filteredProducts.map((product) => (
-        <div key={product._id} style={{ width: '250px', border: '1px solid #ddd', padding: '15px', borderRadius: '10px', backgroundColor: '#fff', boxShadow: '0 4px 8px rgba(0,0,0,0.1)' }}>
-          <img
-            src={product.image || 'https://via.placeholder.com/250'}
-            alt={product.name}
-            style={{ width: '100%', height: '200px', objectFit: 'cover', borderRadius: '8px', marginBottom: '10px' }}
-          />
-          <h3>{product.name}</h3>
-          <p>Price: ₹{product.price}</p>
-          <p>Quantity: {product.quantity}</p>
-          <button className="btn btn-success mt-2" onClick={() => handleAddToCart(product)}>Add to Cart</button>
-          <button className="btn btn-outline-primary mt-2 ms-3" onClick={() => navigate(`/detail/${product._id}`)}>Buy Now</button>
-        </div>
-      ))}
-    </div>
+    <>
+      <style>
+        {`
+          .product-container {
+            padding: 20px;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            justify-content: center;
+          }
+
+          .product-card {
+            flex: 1 1 250px;
+            max-width: 300px;
+            border: 1px solid #ddd;
+            padding: 15px;
+            border-radius: 10px;
+            background-color: #fff;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            text-align: center;
+          }
+
+          .product-image {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            border-radius: 8px;
+            margin-bottom: 10px;
+          }
+
+          .button-group {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            flex-wrap: wrap;
+          }
+
+          @media (max-width: 768px) {
+            .product-card {
+              flex: 1 1 100%;
+              max-width: 100%;
+            }
+          }
+        `}
+      </style>
+
+      <div className="product-container">
+        {filteredProducts.map((product) => (
+          <div className="product-card" key={product._id}>
+            <img
+              src={product.image || 'https://via.placeholder.com/250'}
+              alt={product.name}
+              className="product-image"
+            />
+            <h6>{product.name}</h6>
+            <p>Price: ₹{product.price}</p>
+            <p>Quantity: {product.quantity}</p>
+            <div className="button-group">
+              <button
+                className="btn btn-success"
+                onClick={() => handleAddToCart(product)}
+              >
+                Add to Cart
+              </button>
+              <button
+                className="btn btn-outline-primary"
+                onClick={() => navigate(`/detail/${product._id}`)}
+              >
+                Buy Now
+              </button>
+            </div>
+          </div>
+        ))}
+      </div>
+    </>
   );
 };
 

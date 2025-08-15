@@ -56,7 +56,7 @@ const Cartpage = () => {
             </div>
           ))}
 
-         {/* Sticky bottom bar */}
+
 <div
   className="bg-light p-3 border-top d-flex flex-column flex-md-row justify-content-between align-items-center gap-2"
   style={{

@@ -17,7 +17,7 @@ const About = () => {
   ];
 
   return (
-    <div style={{ padding: '40px', maxWidth: '1000px', margin: 'auto' }}>
+    <div style={{ padding: '20px', maxWidth: '1000px', margin: 'auto' }}>
       <h1 className="text-center mb-4" style={{ color: '#821c32' }}>About Blissfull Bites</h1>
 
       <p style={{ fontSize: '18px', lineHeight: '1.6' }}>

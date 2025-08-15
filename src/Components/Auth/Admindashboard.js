@@ -3,7 +3,7 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { jwtDecode } from "jwt-decode";
 
-const BASE_URL = "https://dessert-project-nine.vercel.app/api/products";
+const BASE_URL = "https://blissfullbites-mern-backend.onrender.com/api/products";
 const LOGOUT_URL = "http://localhost:5000/api/auth/logout";
 
 const AdminDashboard = () => {
@@ -148,8 +148,7 @@ const AdminDashboard = () => {
       console.error("Logout error:", error);
     }
   };
-
-  // Styles
+  
   const containerStyle = {
     maxWidth: "700px", margin: "40px auto", padding: "20px",
     backgroundColor: "#f8f8f8", borderRadius: "10px",

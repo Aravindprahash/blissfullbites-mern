@@ -12,7 +12,7 @@ const Detail = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    fetch(`https://dessert-project-nine.vercel.app/api/products/${id}`)
+    fetch(`https://blissfullbites-mern-backend.onrender.com/api/products/${id}`)
       .then((res) => {
         if (!res.ok) throw new Error('Failed to fetch product');
         return res.json();
@@ -62,7 +62,7 @@ const Detail = () => {
             <strong>Quantity:</strong> {product.quantity}
           </p>
           <p>
-            <b>{product.description}</b>
+            <p>{product.description}</p>
           </p>
           <button className="btn btn-primary mt-3" onClick={handleAddToCart}>
             Add to Cart
