@@ -148,93 +148,144 @@ const AdminDashboard = () => {
       console.error("Logout error:", error);
     }
   };
-  
-  const containerStyle = {
-    maxWidth: "700px", margin: "40px auto", padding: "20px",
-    backgroundColor: "#f8f8f8", borderRadius: "10px",
-    boxShadow: "0 0 10px rgba(0,0,0,0.1)"
-  };
-
-  const inputStyle = {
-    width: "100%", padding: "10px", marginBottom: "10px",
-    borderRadius: "5px", border: "1px solid #ccc"
-  };
-
-  const buttonStyle = {
-    padding: "10px 20px", backgroundColor: "#28a745",
-    color: "#fff", border: "none", borderRadius: "5px", cursor: "pointer",
-    marginRight: "10px"
-  };
-
-  const productCardStyle = {
-    border: "1px solid #ccc", padding: "15px", marginBottom: "15px",
-    borderRadius: "8px", backgroundColor: "#fff"
-  };
-
-  const imageStyle = {
-    maxWidth: "100%", height: "200px", objectFit: "cover",
-    borderRadius: "5px", marginBottom: "10px"
-  };
-
-  const modalStyle = {
-    position: "fixed", top: "50%", left: "50%", transform: "translate(-50%, -50%)",
-    backgroundColor: "#fff", padding: "30px", borderRadius: "10px",
-    boxShadow: "0 0 15px rgba(0,0,0,0.3)", zIndex: 1000
-  };
-
-  const overlayStyle = {
-    position: "fixed", top: 0, left: 0, height: "100vh", width: "100vw",
-    backgroundColor: "rgba(0,0,0,0.5)", zIndex: 999
-  };
-
-  const successPopupStyle = {
-    position: "fixed", top: "20px", right: "20px", backgroundColor: "#28a745",
-    color: "#fff", padding: "10px 20px", borderRadius: "5px", zIndex: 1001
-  };
 
   return (
-    <div style={containerStyle}>
-      <h2>Admin Product Dashboard</h2>
-      {showSuccessPopup && <div style={successPopupStyle}> Product updated successfully!</div>}
-      <input name="name" placeholder="Product Name" value={form.name} onChange={handleChange} style={inputStyle} />
-      <input name="category" placeholder="Category" value={form.category} onChange={handleChange} style={inputStyle}/>
-      <input name="price" placeholder="Price" value={form.price} onChange={handleChange} style={inputStyle} />
-      <input name="quantity" placeholder="Quantity" value={form.quantity} onChange={handleChange} style={inputStyle} />
-      <input name="description" placeholder="Description" value={form.description} onChange={handleChange} style={inputStyle} />
-      <input name="image" placeholder="Image URL" value={form.image} onChange={handleChange} style={inputStyle} />
-      <button onClick={handleCreate} style={buttonStyle}>Add Product</button>
-      <hr />
+    <div className="admin-container">
+      <style>{`
+        .admin-container {
+          max-width: 1200px;
+          margin: 30px auto;
+          padding: 20px;
+        }
+        h2{
+          text-align: center;
+          margin-bottom: 20px;
+          color: #333;
+        }
+        .form-container {
+          background: #fff;
+          padding: 20px;
+          border-radius: 12px;
+          box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+          margin-bottom: 30px;
+        }
+        .form-container input {
+          width: 100%;
+          padding: 10px;
+          margin: 8px 0;
+          border: 1px solid #ccc;
+          border-radius: 6px;
+        }
+        .btn {
+          padding: 10px 20px;
+          border: none;
+          border-radius: 6px;
+          cursor: pointer;
+          font-weight: 500;
+        }
+        .btn-primary { background: #007bff; color: #fff; }
+        .btn-success { background: #28a745; color: #fff; }
+        .btn-danger { background: #dc3545; color: #fff; }
+        .btn-secondary { background: #6c757d; color: #fff; }
+        .product-grid {
+          display: grid;
+          grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+          gap: 20px;
+        }
+        .product-card {
+          background: #fff;
+          border-radius: 12px;
+          padding: 15px;
+          box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+          text-align: center;
+        }
+        .product-card img {
+          width: 100%;
+          height: 200px;
+          object-fit: cover;
+          border-radius: 8px;
+          margin-bottom: 10px;
+        }
+        .product-card h4 {
+          margin: 10px 0;
+          color: #333;
+        }
+        .modal-overlay {
+          position: fixed;
+          top:0; left:0; width:100%; height:100%;
+          background: rgba(0,0,0,0.6);
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          z-index: 1000;
+        }
+        .modal-content {
+          background: #fff;
+          padding: 25px;
+          border-radius: 12px;
+          max-width: 500px;
+          width: 90%;
+        }
+        .success-popup {
+          position: fixed;
+          top: 20px;
+          right: 20px;
+          background: #28a745;
+          color: #fff;
+          padding: 10px 20px;
+          border-radius: 6px;
+          z-index: 2000;
+        }
+        @media(max-width:600px) {
+          .product-card img { height: 150px; }
+          .btn { width: 100%; margin-top: 5px; }
+        }
+      `}</style>
 
-      {products.map((p) => (
-        <div key={p._id} style={productCardStyle}>
-          {p.image || p.images ? <img src={p.image || p.images} alt={p.name} style={imageStyle} /> : null}
-          <h4>{p.name} - ₹{p.price}</h4>
-          <p><strong>Quantity:</strong> {p.quantity}</p>
-          <p>{p.description}</p>
-          <button onClick={() => openUpdateModal(p)} style={buttonStyle}>Update</button>
-          <button onClick={() => handleDelete(p._id)} style={{ ...buttonStyle, backgroundColor: "#dc3545" }}>Delete</button>
-        </div>
-      ))}
+      <h2>​𝘼𝙙𝙢𝙞𝙣 𝙋𝙧𝙤𝙙𝙪𝙘𝙩 𝘿𝙖𝙨𝙝𝙗𝙤𝙖𝙧𝙙</h2>
+      {showSuccessPopup && <div className="success-popup">Product updated successfully!</div>}
+
+      <div className="form-container">
+        <input name="name" placeholder="Product Name" value={form.name} onChange={handleChange}/>
+        <input name="category" placeholder="Category" value={form.category} onChange={handleChange}/>
+        <input name="price" placeholder="Price" value={form.price} onChange={handleChange}/>
+        <input name="quantity" placeholder="Quantity" value={form.quantity} onChange={handleChange}/>
+        <input name="description" placeholder="Description" value={form.description} onChange={handleChange}/>
+        <input name="image" placeholder="Image URL" value={form.image} onChange={handleChange}/>
+        <button onClick={handleCreate} className="btn btn-success">Add Product</button>
+      </div>
+
+      <div className="product-grid">
+        {products.map((p) => (
+          <div key={p._id} className="product-card">
+            {p.image || p.images ? <img src={p.image || p.images} alt={p.name} /> : null}
+            <h4>{p.name} - ₹{p.price}</h4>
+            <p><strong>Qty:</strong> {p.quantity}</p>
+            <p>{p.description}</p>
+            <button onClick={() => openUpdateModal(p)} className="btn btn-primary">Update</button>{" "}
+            <button onClick={() => handleDelete(p._id)} className="btn btn-danger">Delete</button>
+          </div>
+        ))}
+      </div>
 
       {isModalOpen && (
-        <>
-          <div style={overlayStyle} onClick={() => setIsModalOpen(false)} />
-          <div style={modalStyle}>
+        <div className="modal-overlay" onClick={() => setIsModalOpen(false)}>
+          <div className="modal-content" onClick={(e)=>e.stopPropagation()}>
             <h3>Edit Product</h3>
-            <input name="name" value={form.name} onChange={handleChange} style={inputStyle} />
-            <input name="category" value={form.category} onChange={handleChange} style={inputStyle}/>
-            <input name="price" value={form.price} onChange={handleChange} style={inputStyle} />
-            <input name="quantity" value={form.quantity} onChange={handleChange} style={inputStyle} />
-            <input name="description" value={form.description} onChange={handleChange} style={inputStyle} />
-            <input name="image" value={form.image} onChange={handleChange} style={inputStyle} />
-            <button onClick={handleModalUpdate} style={buttonStyle}>Submit Update</button>
-            <button onClick={() => setIsModalOpen(false)} style={{ ...buttonStyle, backgroundColor: "#6c757d" }}>Cancel</button>
+            <input name="name" value={form.name} onChange={handleChange}/>
+            <input name="category" value={form.category} onChange={handleChange}/>
+            <input name="price" value={form.price} onChange={handleChange}/>
+            <input name="quantity" value={form.quantity} onChange={handleChange}/>
+            <input name="description" value={form.description} onChange={handleChange}/>
+            <input name="image" value={form.image} onChange={handleChange}/>
+            <button onClick={handleModalUpdate} className="btn btn-success">Submit Update</button>{" "}
+            <button onClick={() => setIsModalOpen(false)} className="btn btn-secondary">Cancel</button>
           </div>
-        </>
+        </div>
       )}
 
-      <button onClick={handleLogout} style={{ ...buttonStyle, backgroundColor: "#007bff", marginTop: "20px", width: "100%" }}>
-         Logout
+      <button onClick={handleLogout} className="btn btn-primary" style={{marginTop:"30px", width:"100%"}}>
+        Logout
       </button>
     </div>
   );

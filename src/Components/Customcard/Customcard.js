@@ -37,13 +37,18 @@ const Customcard = () => {
     product.name.toLowerCase().includes(searchTerm.toLowerCase())
   );
 
-  if (loading) return <p style={{ textAlign: 'center' }}>Loading products...</p>;
-  if (error) return <p style={{ color: 'red', textAlign: 'center' }}>{error}</p>;
-
   return (
     <>
       <style>
         {`
+          .page-wrapper {
+            min-height: 70vh; /* ensures footer stays bottom */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+          }
+
           .product-container {
             padding: 20px;
             display: flex;
@@ -78,6 +83,13 @@ const Customcard = () => {
             flex-wrap: wrap;
           }
 
+          .message {
+            text-align: center;
+            font-size: 18px;
+            margin-top: 40px;
+            color: #555;
+          }
+
           @media (max-width: 768px) {
             .product-card {
               flex: 1 1 100%;
@@ -87,33 +99,42 @@ const Customcard = () => {
         `}
       </style>
 
-      <div className="product-container">
-        {filteredProducts.map((product) => (
-          <div className="product-card" key={product._id}>
-            <img
-              src={product.image || 'https://via.placeholder.com/250'}
-              alt={product.name}
-              className="product-image"
-            />
-            <h6>{product.name}</h6>
-            <p>Price: ₹{product.price}</p>
-            <p>Quantity: {product.quantity}</p>
-            <div className="button-group">
-              <button
-                className="btn btn-success"
-                onClick={() => handleAddToCart(product)}
-              >
-                Add to Cart
-              </button>
-              <button
-                className="btn btn-outline-primary"
-                onClick={() => navigate(`/detail/${product._id}`)}
-              >
-                Buy Now
-              </button>
+      <div className="page-wrapper">
+        {loading && <p className="message">Loading products...</p>}
+        {error && <p className="message" style={{ color: 'red' }}>{error}</p>}
+
+        {!loading && !error && filteredProducts.length === 0 && (
+          <p className="message"> Your searched item is not found at this moment</p>
+        )}
+
+        <div className="product-container">
+          {filteredProducts.map((product) => (
+            <div className="product-card" key={product._id}>
+              <img
+                src={product.image || 'https://via.placeholder.com/250'}
+                alt={product.name}
+                className="product-image"
+              />
+              <h6>{product.name}</h6>
+              <p>Price: ₹{product.price}</p>
+              <p>Quantity: {product.quantity}</p>
+              <div className="button-group">
+                <button
+                  className="btn btn-success"
+                  onClick={() => handleAddToCart(product)}
+                >
+                  Add to Cart
+                </button>
+                <button
+                  className="btn btn-outline-primary"
+                  onClick={() => navigate(`/detail/${product._id}`)}
+                >
+                  Buy Now
+                </button>
+              </div>
             </div>
-          </div>
-        ))}
+          ))}
+        </div>
       </div>
     </>
   );
